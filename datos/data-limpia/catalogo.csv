@@ -1,54 +1,54 @@
-oid,nombre,h4,h3,h2,h1,s4,s3,s2,s1,k4,k3,k2,k1,hito,skill,knowledge,complexity_8bits,complexity_12bits
-0973dae0e1b74ab8baa8d94339ee3ae6,Cálculo del dígito verificador del rut,0,0,0,1,0,0,0,1,0,1,1,1,1,1,7,23,279
-16f619db31204ded9418136c4587ddd8,Calculadora Geométrica,0,0,1,0,0,0,0,1,0,0,0,1,2,1,1,17,529
-17022c9ceac94ec5b2e7bc934c7b2d6f,Subsecuencias de ADN,0,0,1,0,0,0,1,1,0,1,1,1,2,3,7,55,567
-171b5e86d4fb47268f2692587fbec073,Números Primos,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-2437df93d3f44a87b00834072aeb1ab0,Nota Final,0,0,0,1,0,0,0,0,0,0,0,1,1,0,1,1,257
-24b87304a1eb4e95856da7f574a66fe8,Validador de Expresiones Matemáticas,1,0,0,0,1,0,0,0,0,1,1,1,4,8,7,135,2183
-29f15ef8dc32426f945f64e28c910a57,Suma de los divisores de un número,0,0,1,0,0,0,0,1,0,0,1,1,2,1,3,19,531
-31ea1c1b12174428b5a67a6576627de9,Resolver un sistema de ecuaciones,0,0,0,1,0,0,0,0,0,0,0,1,1,0,1,1,257
-37e4f4a1e8174e9496d21b00d67fc8f1,Distancia Levenshtein,0,0,1,0,0,0,1,1,0,1,1,1,2,3,7,55,567
-3d7d9e64ac0846caadc08dccf2538f55,Validar Secuencias de ADN,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-46850a246d48484b8f104f8aab5679b6,Descomponer un número,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-4d51d13b9a2848a2803f7d1143fde6d4,Adivina la palabra,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-4d5ed23727c04a8790f2e4ab3f09767e,Función buscarTodas,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-52620b0c858a4c59bc324b65278d28bd,Cajero Automático Nivel 2,0,0,0,1,0,0,0,1,0,0,1,1,1,1,3,19,275
-5590919d229f4e8f8fc34c66b93a73fe,Clase Auto,0,1,0,0,0,0,1,0,1,0,1,1,3,2,11,43,1067
-61538386ed7e4b889ff17395cfec7c6b,Twitter,0,1,0,0,0,1,0,1,0,1,1,1,3,5,7,87,1111
-677fbf669a0d496c843190c116b4f173,Ornitología 1,0,1,0,0,0,0,0,0,1,0,0,0,3,0,8,8,1032
-718578451f3f4eca87437cadfe98d688,Suma de los N primeros números naturales,0,0,0,1,0,0,0,0,0,0,1,0,1,0,2,2,258
-729d37da8f2d46f3af2d891df04949ef,Juego Adivina mi número,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-7531f377820249289b238400412eb24c,Cuenta Corriente en un Banco,0,1,0,0,0,0,1,0,1,0,1,1,3,2,11,43,1067
-7a1fcba4d7f24d129224d62accfef216,Multiplicación de Matrices ,0,1,0,0,0,1,0,0,0,1,1,1,3,4,7,71,1095
-7da6cedd04c44a15b5e421440253acff,El antipoema,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-7f60644b0a1b484681ae5c8e36166c58,Signo del Zodíaco,0,0,0,1,0,0,0,1,0,0,0,1,1,1,1,17,273
-80c61dae74fa4915bf272ab17dfa62ff,Conversor de Decimal a Binario,0,0,0,1,0,0,0,0,0,0,1,0,1,0,2,2,258
-82e092a2744544d1b6cedde23d4596a5,Clase Vector3D,0,1,0,0,0,0,0,1,1,1,1,1,3,1,15,31,1055
-89f44e7f5842479fb283e43c52ce067b,Ordenar tres números,0,0,0,1,0,0,0,0,0,0,0,1,1,0,1,1,257
-8f24397e36034cccb71e9d578975c33d,Contestador Automático,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-995f2cf9681542a4a4738de074275f4a,Decodificador,0,1,0,0,0,0,1,0,0,1,1,1,3,2,7,39,1063
-9e02c76901da440ba1b70f0a75d8ae89,Encriptador ROT13,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-a3963220090f4e50a266ce53d33b9841,Aprobación de Créditos,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-abbcd12771fd45ca823f6222f72b48c8,Interpretar Expresiones Matématicas,1,0,0,0,1,1,0,0,0,1,1,1,4,12,7,199,2247
-abc052e584734d0f8121d5e5ca659f82,Carro de Compras,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-ac7382763e484d37908da54c076f7577,Cajero Automático Nivel 1,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-b16016fbdbf04317871d334cc4da6eae,Alineamiento de Secuencias,0,0,1,0,0,1,0,0,0,1,1,1,2,4,7,71,583
-b5e026a9cf014d71b110c58108a21752,Ornitología 3,0,1,0,0,0,0,0,0,1,1,0,0,3,0,12,12,1036
-baf2f8e0167a4e089d2cec16582c9ae9,Factores Primos,0,0,0,1,0,0,0,1,0,0,1,1,1,1,3,19,275
-be17b556785c428e8dabbef0c9d11f6f,Pintar Región,1,0,0,0,1,0,0,0,0,1,1,1,4,8,7,135,2183
-c0a2cd8059d44afb822a031066678092,Jerigonzo,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-c0d9a3b2f7be46dab1f792c7fbd365b9,Decodificador,0,0,1,0,0,0,1,0,0,1,1,1,2,2,7,39,551
-cb796b16ddf1435da29b223fc084c847,Clase Fracción,0,1,0,0,0,0,0,1,1,1,1,1,3,1,15,31,1055
-d28eb11da0a44881be979e551d122eb9,Juego del Gato,0,1,0,0,0,1,0,1,1,1,1,1,3,5,15,95,1119
-d44d5fead16c47a986287ff2bc48d20f,Clase FechaHora,0,1,0,0,0,0,1,0,1,1,1,1,3,2,15,47,1071
-d8395f43e4a1454d90346ac5a1ba561a,Números Amigos,0,0,0,1,0,0,0,0,0,0,1,1,1,0,3,3,259
-d849ec19c3834c2b9c9ff2ab34d2f3e3,Clase Usuario,0,1,0,0,0,0,1,1,1,1,1,1,3,3,15,63,1087
-db7987d040dc469a9c247d54dd72939a,Números Perfectos,0,0,1,0,0,0,0,1,0,0,1,1,2,1,3,19,531
-db873d7e50684080ba8f39aed56b288e,Carro de Compras,0,1,0,0,0,0,1,0,1,1,1,1,3,2,15,47,1071
-dd1000315e5b43ac89ae1d416400d9d6,Pokemon,0,1,0,0,0,0,1,1,1,1,1,1,3,3,15,63,1087
-e6093c934b8c40b4bee9969b32a30bed,El problema de la mochila,1,0,0,0,1,1,0,0,0,1,1,1,4,12,7,199,2247
-e72db1cb2e9f400990cfa3b464d0391a,Sopa de Letras,0,0,1,0,0,1,0,1,0,1,1,1,2,5,7,87,599
-e8a9dc7b6127482987d9b6dbca73ec5e,Caminos entre ciudades,0,1,0,0,0,0,1,0,1,1,1,1,3,2,15,47,1071
-e9df502fccd9455a8a7609d542a857c8,MCM recursivo,1,0,0,0,0,0,0,1,0,0,1,1,4,1,3,19,2067
-eb91ed4e997b4ca98f3c86e3e86a3755,Combinaciones de Números Binarios,1,0,0,0,1,1,0,0,0,1,1,1,4,12,7,199,2247
-f7f404137f974160bcbfa423f5d35eda,Ornitología 2,0,1,0,0,0,0,0,0,1,0,0,0,3,0,8,8,1032
+oid,nombre,s1,s2,s3,s4,k1,k2,k3,k4,hito,skill,knowledge,complexity
+0973dae0e1b74ab8baa8d94339ee3ae6,Cálculo del dígito verificador del rut,0,0,0,1,0,1,1,1,1,1,7,23
+16f619db31204ded9418136c4587ddd8,Calculadora Geométrica,0,0,0,1,0,0,0,1,2,1,1,17
+17022c9ceac94ec5b2e7bc934c7b2d6f,Subsecuencias de ADN,0,0,1,1,0,1,1,1,2,3,7,55
+171b5e86d4fb47268f2692587fbec073,Números Primos,0,0,0,0,0,0,1,1,1,0,3,3
+2437df93d3f44a87b00834072aeb1ab0,Nota Final,0,0,0,0,0,0,0,1,1,0,1,1
+24b87304a1eb4e95856da7f574a66fe8,Validador de Expresiones Matemáticas,1,0,0,0,0,1,1,1,4,8,7,135
+29f15ef8dc32426f945f64e28c910a57,Suma de los divisores de un número,0,0,0,1,0,0,1,1,2,1,3,19
+31ea1c1b12174428b5a67a6576627de9,Resolver un sistema de ecuaciones,0,0,0,0,0,0,0,1,1,0,1,1
+37e4f4a1e8174e9496d21b00d67fc8f1,Distancia Levenshtein,0,0,1,1,0,1,1,1,2,3,7,55
+3d7d9e64ac0846caadc08dccf2538f55,Validar Secuencias de ADN,0,0,1,0,0,1,1,1,2,2,7,39
+46850a246d48484b8f104f8aab5679b6,Descomponer un número,0,0,0,0,0,0,1,1,1,0,3,3
+4d51d13b9a2848a2803f7d1143fde6d4,Adivina la palabra,0,0,1,0,0,1,1,1,2,2,7,39
+4d5ed23727c04a8790f2e4ab3f09767e,Función buscarTodas,0,0,1,0,0,1,1,1,2,2,7,39
+52620b0c858a4c59bc324b65278d28bd,Cajero Automático Nivel 2,0,0,0,1,0,0,1,1,1,1,3,19
+5590919d229f4e8f8fc34c66b93a73fe,Clase Auto,0,0,1,0,1,0,1,1,3,2,11,43
+61538386ed7e4b889ff17395cfec7c6b,Twitter,0,1,0,1,0,1,1,1,3,5,7,87
+677fbf669a0d496c843190c116b4f173,Ornitología 1,0,0,0,0,1,0,0,0,3,0,8,8
+718578451f3f4eca87437cadfe98d688,Suma de los N primeros números naturales,0,0,0,0,0,0,1,0,1,0,2,2
+729d37da8f2d46f3af2d891df04949ef,Juego Adivina mi número,0,0,0,0,0,0,1,1,1,0,3,3
+7531f377820249289b238400412eb24c,Cuenta Corriente en un Banco,0,0,1,0,1,0,1,1,3,2,11,43
+7a1fcba4d7f24d129224d62accfef216,Multiplicación de Matrices ,0,1,0,0,0,1,1,1,3,4,7,71
+7da6cedd04c44a15b5e421440253acff,El antipoema,0,0,1,0,0,1,1,1,2,2,7,39
+7f60644b0a1b484681ae5c8e36166c58,Signo del Zodíaco,0,0,0,1,0,0,0,1,1,1,1,17
+80c61dae74fa4915bf272ab17dfa62ff,Conversor de Decimal a Binario,0,0,0,0,0,0,1,0,1,0,2,2
+82e092a2744544d1b6cedde23d4596a5,Clase Vector3D,0,0,0,1,1,1,1,1,3,1,15,31
+89f44e7f5842479fb283e43c52ce067b,Ordenar tres números,0,0,0,0,0,0,0,1,1,0,1,1
+8f24397e36034cccb71e9d578975c33d,Contestador Automático,0,0,0,0,0,0,1,1,1,0,3,3
+995f2cf9681542a4a4738de074275f4a,Decodificador,0,0,1,0,0,1,1,1,3,2,7,39
+9e02c76901da440ba1b70f0a75d8ae89,Encriptador ROT13,0,0,1,0,0,1,1,1,2,2,7,39
+a3963220090f4e50a266ce53d33b9841,Aprobación de Créditos,0,0,0,0,0,0,1,1,1,0,3,3
+abbcd12771fd45ca823f6222f72b48c8,Interpretar Expresiones Matématicas,1,1,0,0,0,1,1,1,4,12,7,199
+abc052e584734d0f8121d5e5ca659f82,Carro de Compras,0,0,1,0,0,1,1,1,2,2,7,39
+ac7382763e484d37908da54c076f7577,Cajero Automático Nivel 1,0,0,0,0,0,0,1,1,1,0,3,3
+b16016fbdbf04317871d334cc4da6eae,Alineamiento de Secuencias,0,1,0,0,0,1,1,1,2,4,7,71
+b5e026a9cf014d71b110c58108a21752,Ornitología 3,0,0,0,0,1,1,0,0,3,0,12,12
+baf2f8e0167a4e089d2cec16582c9ae9,Factores Primos,0,0,0,1,0,0,1,1,1,1,3,19
+be17b556785c428e8dabbef0c9d11f6f,Pintar Región,1,0,0,0,0,1,1,1,4,8,7,135
+c0a2cd8059d44afb822a031066678092,Jerigonzo,0,0,1,0,0,1,1,1,2,2,7,39
+c0d9a3b2f7be46dab1f792c7fbd365b9,Decodificador,0,0,1,0,0,1,1,1,2,2,7,39
+cb796b16ddf1435da29b223fc084c847,Clase Fracción,0,0,0,1,1,1,1,1,3,1,15,31
+d28eb11da0a44881be979e551d122eb9,Juego del Gato,0,1,0,1,1,1,1,1,3,5,15,95
+d44d5fead16c47a986287ff2bc48d20f,Clase FechaHora,0,0,1,0,1,1,1,1,3,2,15,47
+d8395f43e4a1454d90346ac5a1ba561a,Números Amigos,0,0,0,0,0,0,1,1,1,0,3,3
+d849ec19c3834c2b9c9ff2ab34d2f3e3,Clase Usuario,0,0,1,1,1,1,1,1,3,3,15,63
+db7987d040dc469a9c247d54dd72939a,Números Perfectos,0,0,0,1,0,0,1,1,2,1,3,19
+db873d7e50684080ba8f39aed56b288e,Carro de Compras,0,0,1,0,1,1,1,1,3,2,15,47
+dd1000315e5b43ac89ae1d416400d9d6,Pokemon,0,0,1,1,1,1,1,1,3,3,15,63
+e6093c934b8c40b4bee9969b32a30bed,El problema de la mochila,1,1,0,0,0,1,1,1,4,12,7,199
+e72db1cb2e9f400990cfa3b464d0391a,Sopa de Letras,0,1,0,1,0,1,1,1,2,5,7,87
+e8a9dc7b6127482987d9b6dbca73ec5e,Caminos entre ciudades,0,0,1,0,1,1,1,1,3,2,15,47
+e9df502fccd9455a8a7609d542a857c8,MCM recursivo,0,0,0,1,0,0,1,1,4,1,3,19
+eb91ed4e997b4ca98f3c86e3e86a3755,Combinaciones de Números Binarios,1,1,0,0,0,1,1,1,4,12,7,199
+f7f404137f974160bcbfa423f5d35eda,Ornitología 2,0,0,0,0,1,0,0,0,3,0,8,8
