@@ -1,0 +1,35 @@
+# FUNCIONES
+
+
+RecSysUnab.py --exers [0,1,0,0,0,1....50] --id n 
+
+
+
+
+
+
+https://arxiv.org/abs/cs/0702144
+
+
+
+
+
+
+
+model_combined_score_3 = tf.keras.models.Sequential([
+    tf.keras.layers.Dense(64, activation='relu', input_shape=(x_train_combined_score_3.shape[1],)),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(32, activation='relu'),
+    tf.keras.layers.Dropout(0.2),
+    tf.keras.layers.Dense(1, activation='linear')
+])
+
+model_combined_score_3.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='mean_squared_error')
+model_combined_score_3.summary()
+
+history_combined_score_3 = model_combined_score_3.fit(x_train_combined_score_3, y_train_combined_score_3, epochs=50, batch_size=32, validation_split=0.2, verbose=1)
+
+print()
+loss_combined_score_3 = model_combined_score_3.evaluate(x_test_combined_score_3, y_test_combined_score_3)
+print(f'Loss en el conjunto de prueba: {loss_combined_score_3}')
+predictions_combined_score_3 = model_combined_score_3.predict(x_test_combined_score_3)
