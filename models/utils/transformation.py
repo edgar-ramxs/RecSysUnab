@@ -172,7 +172,7 @@ def get_top_n_recommendations(model, df: pd.DataFrame, feature_users: str = 'use
     items_pairs = [(user_id, item, 0) for item in set(all_items) - set(items_interacted)]
     predictions = model.test(items_pairs)
     top_n_recommendations = sorted(predictions, key=lambda x: x.est, reverse=True)[:n_recommenders]
-    return [str(pred.iid) for pred in top_n_recommendations]
+    return [int(pred.iid) for pred in top_n_recommendations]
 
 
 def calculate_score_row(features: Dict[str, Tuple[float, float]], values: Dict[str, float], weights: Dict[str, float]) -> float:
@@ -216,34 +216,6 @@ def calculate_score_dataset(df: pd.DataFrame, features: Dict[str, Tuple[float, f
     # Apply the score function to each row
     df[new_column] = df.apply(lambda row: calculate_score_row(features, row.to_dict(), weights), axis=1)
     return df
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

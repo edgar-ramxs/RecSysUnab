@@ -33,3 +33,235 @@ print()
 loss_combined_score_3 = model_combined_score_3.evaluate(x_test_combined_score_3, y_test_combined_score_3)
 print(f'Loss en el conjunto de prueba: {loss_combined_score_3}')
 predictions_combined_score_3 = model_combined_score_3.predict(x_test_combined_score_3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import tensorflow as tf
+from tensorflow.keras.layers import Embedding, Dense, Flatten, Input, Concatenate, Dot
+from tensorflow.keras.models import Model
+
+# Supongamos que tenemos los siguientes datos
+num_users = 100  # Número de usuarios
+num_exercises = 50  # Número de ejercicios
+embedding_dim = 16  # Dimensión de los embeddings
+
+# Torre de Usuario
+user_career_input = Input(shape=(1,), name="user_career")  # Carrera
+user_exercises_input = Input(shape=(num_exercises,), name="user_exercises")  # Ejercicios completados (binario)
+user_scores_input = Input(shape=(3,), name="user_scores")  # Puntajes A, B y C
+
+# Embedding de carrera
+user_career_embedding = Embedding(input_dim=num_users, output_dim=embedding_dim)(user_career_input)
+user_career_embedding = Flatten()(user_career_embedding)
+
+# Concatenamos todas las características del usuario
+user_features = Concatenate()([user_career_embedding, user_exercises_input, user_scores_input])
+
+# Pasamos las características de usuario por una capa densa
+user_dense = Dense(embedding_dim, activation="relu")(user_features)
+
+# Torre de Ejercicio
+exercise_hito_input = Input(shape=(1,), name="exercise_hito")  # Hito
+exercise_knowledge_input = Input(shape=(1,), name="exercise_knowledge")  # Conocimiento
+exercise_skill_input = Input(shape=(1,), name="exercise_skill")  # Habilidad
+
+# Embeddings de hito, conocimiento y habilidad
+exercise_hito_embedding = Embedding(input_dim=10, output_dim=embedding_dim)(exercise_hito_input)
+exercise_knowledge_embedding = Embedding(input_dim=10, output_dim=embedding_dim)(exercise_knowledge_input)
+exercise_skill_embedding = Embedding(input_dim=10, output_dim=embedding_dim)(exercise_skill_input)
+
+# Aplanamos y concatenamos todas las características de ejercicio
+exercise_features = Concatenate()([
+    Flatten()(exercise_hito_embedding),
+    Flatten()(exercise_knowledge_embedding),
+    Flatten()(exercise_skill_embedding)
+])
+
+# Pasamos las características del ejercicio por una capa densa
+exercise_dense = Dense(embedding_dim, activation="relu")(exercise_features)
+
+# Cálculo de similitud entre usuario y ejercicio (producto punto)
+similarity = Dot(axes=1)([user_dense, exercise_dense])
+
+# Modelo de recomendación completo
+model = Model(inputs=[
+    user_career_input, user_exercises_input, user_scores_input,
+    exercise_hito_input, exercise_knowledge_input, exercise_skill_input
+], outputs=similarity)
+
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+
+# Resumen del modelo
+model.summary()
+
+
+# Ejemplo de datos de entrenamiento
+import numpy as np
+
+# IDs ficticios para entrenamiento
+user_careers = np.random.randint(0, num_users, size=1000)
+user_exercises = np.random.randint(0, 2, size=(1000, num_exercises))  # Lista binaria de ejercicios hechos
+user_scores = np.random.randint(0, 10, size=(1000, 3))  # Puntajes A, B y C
+exercise_hitos = np.random.randint(0, 10, size=1000)
+exercise_knowledge = np.random.randint(0, 10, size=1000)
+exercise_skill = np.random.randint(0, 10, size=1000)
+labels = np.random.randint(0, 2, size=1000)  # 1 si el usuario hizo el ejercicio, 0 si no
+
+# Entrenar el modelo
+model.fit(
+    [user_careers, user_exercises, user_scores, exercise_hitos, exercise_knowledge, exercise_skill],
+    labels,
+    epochs=10,
+    batch_size=32
+)
+
+# Datos del usuario
+user_career = np.array([2])  # ID de la carrera del usuario
+user_exercises = np.array([[1, 0, 1, 0, ..., 1]])  # Lista binaria de ejercicios realizados (asegúrate que sea del tamaño correcto)
+user_scores = np.array([[5, 7, 3]])  # Puntajes A, B y C del usuario
+
+# Datos del ejercicio
+exercise_hito = np.array([3])  # Hito del ejercicio
+exercise_knowledge = np.array([2])  # Conocimiento requerido
+exercise_skill = np.array([4])  # Habilidad requerida
+
+# Hacer la predicción de afinidad
+prediction = model.predict([user_career, user_exercises, user_scores, exercise_hito, exercise_knowledge, exercise_skill])
+
+print("Afinidad usuario-ejercicio:", prediction[0][0])
+
+
+
+
+
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Ejemplo de perfil de un nuevo usuario
+new_user_profile = np.array([[2, 5, 7, 3]])  # [carrera, puntaje A, puntaje B, puntaje C]
+
+# Perfiles de ejercicios (matriz de n_ejercicios x características)
+exercise_profiles = np.array([
+    [3, 4, 6, 2],  # Ejercicio 1
+    [2, 5, 7, 3],  # Ejercicio 2, etc.
+    ...
+])
+
+# Calcular la similitud entre el nuevo usuario y todos los ejercicios
+similarity_scores = cosine_similarity(new_user_profile, exercise_profiles)
+recommended_exercise_indices = similarity_scores.argsort()[0][-5:]  # Índices de los 5 ejercicios más similares
+
+
+# Ejemplo de lista de ejercicios y su popularidad
+exercises_popularity = {
+    "Ejercicio A": 150,
+    "Ejercicio B": 125,
+    "Ejercicio C": 100,
+    ...
+}
+
+# Ordenar ejercicios por popularidad y seleccionar los más altos
+popular_exercises = sorted(exercises_popularity, key=exercises_popularity.get, reverse=True)[:5]
+print("Recomendación de ejercicios populares:", popular_exercises)
+
+
+
+# Supongamos que `content_based_recommendations` es la lista obtenida de la estrategia 2
+# Y `popular_exercises` es la lista de la estrategia 3
+
+def hybrid_recommendation(user_profile, top_n=5):
+    if is_new_user(user_profile):
+        # Para nuevos usuarios, mezclamos basados en contenido y popularidad
+        recommendations = popular_exercises[:top_n] + content_based_recommendations[:top_n]
+    else:
+        # Para usuarios con historial, usamos el modelo de dos torres
+        recommendations = model.predict(user_profile)[:top_n]
+    
+    return recommendations[:top_n]
+
+# Ejemplo de uso
+recommendations = hybrid_recommendation(new_user_profile)
+print("Recomendaciones híbridas:", recommendations)
+
+
+
+
+import numpy as np
+import tensorflow as tf
+from keras.layers import Embedding, Dense, Flatten
+from keras.models import Model
+from keras.layers import Input, Concatenate
+
+# Datos simulados
+num_users = 1000    # Número de usuarios
+num_movies = 500    # Número de películas
+embedding_dim = 32  # Dimensión de los embeddings
+
+# Datos de usuario y película
+user_ids = np.random.randint(0, num_users, size=10000)
+movie_ids = np.random.randint(0, num_movies, size=10000)
+labels = np.random.randint(0, 2, size=10000)  # 1 si le gustó, 0 si no
+
+
+# Datos simulados
+num_users = 1000    # Número de usuarios
+num_movies = 500    # Número de películas
+embedding_dim = 32  # Dimensión de los embeddings
+
+# Datos de usuario y película
+user_ids = np.random.randint(0, num_users, size=10000)
+movie_ids = np.random.randint(0, num_movies, size=10000)
+labels = np.random.randint(0, 2, size=10000)  # 1 si le gustó, 0 si no
+
+labels
+
+# Torre para usuarios
+user_input = Input(shape=(1,), name="user_id")
+user_embedding = Embedding(input_dim=num_users, output_dim=embedding_dim, name="user_embedding")(user_input)
+user_embedding = Flatten()(user_embedding)
+
+# Torre para películas
+movie_input = Input(shape=(1,), name="movie_id")
+movie_embedding = Embedding(input_dim=num_movies, output_dim=embedding_dim, name="movie_embedding")(movie_input)
+movie_embedding = Flatten()(movie_embedding)
+
+# Similaridad entre usuario y película (producto punto)
+dot_product = tf.keras.layers.Dot(axes=1)([user_embedding, movie_embedding])
+
+# Modelo completo
+model = Model(inputs=[user_input, movie_input], outputs=dot_product)
+model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+
+# Entrenamiento del modelo
+model.fit([user_ids, movie_ids], labels, epochs=10, batch_size=64)
+
+# Predicción de la preferencia de un usuario para una película específica
+user_id = np.array([4])  # ID del usuario
+movie_id = np.array([10])  # ID de la película
+
+predicted_preference = model.predict([user_id, movie_id])
+print(f"Predicción de que al usuario {user_id[0]} le gustará la película {movie_id[0]}: {predicted_preference[0][0]}")
