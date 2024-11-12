@@ -1,4 +1,5 @@
 .vscode/
 .sistema-de-recomendacion-unab-env/
 __pycache__/
+examples/
 *.pyc
