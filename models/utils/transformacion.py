@@ -21,43 +21,42 @@ def crear_lista_ejercicios(n_ejercicios: int, ejercicios_realizados: List[int]) 
     """
     lista_ejercicios = [0] * n_ejercicios
     for ejercicio in ejercicios_realizados:
-        if 0 <= ejercicio < n_ejercicios:   # Validar que el ejercicio esté en el rango permitido
+        if 0 <= ejercicio < n_ejercicios:
             lista_ejercicios[ejercicio] = 1
     return lista_ejercicios
 
 
-def crear_matriz_factorizacion(df_usuarios: DataFrame, df_ejercicios: DataFrame, columna_usuario: str, columnas_ejercicios: List[str]) -> DataFrame:
+def crear_matriz_factorizacion(df_usuarios: DataFrame, df_items: DataFrame, columna_usuario: str) -> DataFrame:
     """Genera una matriz de factorización de usuarios por ejercicios en formato binario.
 
     Parámetros:
     - df_usuarios (DataFrame): DataFrame que contiene la información de los usuarios.
-    - df_ejercicios (DataFrame): DataFrame que contiene la información de los ejercicios.
+    - df_items (DataFrame): DataFrame que contiene la información de los ejercicios.
     - columna_usuario (str): Nombre de la columna que identifica a los usuarios.
-    - columnas_ejercicios (List[str]): Lista de nombres de columnas que contienen los ejercicios.
 
     Retorna:
     - DataFrame: Matriz de factorización de usuarios por ejercicios.
     """
-    n_ejercicios = len(df_ejercicios)
-    matriz_factorizacion = DataFrame(columns=[f"e{i}" for i in range(n_ejercicios)])
+    n_items = len(df_items)
+    matriz_factorizacion = DataFrame(columns=[f"e{i}" for i in range(n_items)])
 
-    # Validar que las columnas existan en df_usuarios
-    for col in columnas_ejercicios:
-        if col not in df_usuarios.columns:
-            raise ValueError(f"La columna '{col}' no existe en df_usuarios.")
+    for indice, fila in df_usuarios.iterrows():
+        ejercicios = []
+        
+        if not fila['ejercicios_hito1'] == -1:
+            ejercicios += fila['ejercicios_hito1']
+        if not fila['ejercicios_hito2'] == -1:
+            ejercicios += fila['ejercicios_hito2']
+        if not fila['ejercicios_hito3'] == -1:
+            ejercicios += fila['ejercicios_hito3']
+        if not fila['ejercicios_hito4'] == -1:
+            ejercicios += fila['ejercicios_hito4']
 
-    for indice in range(len(df_usuarios)):
-        ejercicios_realizados = []
-        for col in columnas_ejercicios:
-            ejercicios = df_usuarios.iloc[indice][col]
-            lista_ejercicios = [int(elemento) for elemento in str(ejercicios).split(":")[1:] if elemento.isdigit()]
-            ejercicios_realizados.extend(lista_ejercicios)
-
-        vector_ejercicios = crear_lista_ejercicios(n_ejercicios, ejercicios_realizados)
+        vector_ejercicios = crear_lista_ejercicios(n_items, ejercicios)
         matriz_factorizacion.loc[len(matriz_factorizacion)] = vector_ejercicios
 
     matriz_factorizacion[columna_usuario] = df_usuarios[columna_usuario].values
-    matriz_factorizacion = matriz_factorizacion[[columna_usuario] + [f"e{i}" for i in range(n_ejercicios)]]
+    matriz_factorizacion = matriz_factorizacion[[columna_usuario] + [f"e{i}" for i in range(n_items)]]
     return matriz_factorizacion
 
 

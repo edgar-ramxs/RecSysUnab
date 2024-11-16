@@ -2,8 +2,82 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import tensorflow as tf
-from pandas import DataFrame, factorize
 
+from joblib import dump, load
+from typing import Dict, List, Optional, Text, Tuple
+from pandas import DataFrame, concat, factorize
+from surprise import SVD, Reader, Dataset
+from surprise.model_selection import cross_validate
+
+
+
+
+#  ███████╗██╗   ██╗██████╗ ██████╗ ██████╗ ██╗███████╗███████╗
+#  ██╔════╝██║   ██║██╔══██╗██╔══██╗██╔══██╗██║██╔════╝██╔════╝
+#  ███████╗██║   ██║██████╔╝██████╔╝██████╔╝██║███████╗█████╗  
+#  ╚════██║██║   ██║██╔══██╗██╔═══╝ ██╔══██╗██║╚════██║██╔══╝  
+#  ███████║╚██████╔╝██║  ██║██║     ██║  ██║██║███████║███████╗
+#  ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝
+
+class RecommenderSystemSurprise:
+    def __init__(self, algorithm = SVD(), model_path: str = 'RecommenderSystemSurprise.joblib'):
+        self.data = None
+        self.reader = None
+        self.model = algorithm
+        self.model_path = model_path
+        
+    def load_data(self, dataframe: DataFrame, rating_scale: Tuple[float, float]) -> None: 
+        self.reader = Reader(rating_scale=rating_scale)
+        self.data = Dataset.load_from_df(dataframe, self.reader)
+
+    def train(self) -> None:
+        if not self.data:
+            raise ValueError("Data not loaded. Use 'load_data' to load a DataFrame first.")
+        trainset = self.data.build_full_trainset()
+        self.model.fit(trainset)
+        print("[+] Model trained successfully.")
+
+    def evaluate(self, cv: int = 5) -> dict:
+        if not self.data:
+            raise ValueError("Data not loaded. Use 'load_data' to load a DataFrame first.")
+        results = cross_validate(self.model, self.data, measures=['RMSE', 'MAE'], cv=cv, verbose=True)
+        return results
+
+    def predict(self, user_id: int, item_id: int) -> float:
+        return self.model.predict(user_id, item_id).est
+    
+    def get_recommendations(self, user_id: int, user_column: str = 'user_id', item_column: str = 'item_id', n_recommendations: int = 10) -> List[int]:
+        dataframe = self.data.df
+        items_interactuados = dataframe[dataframe[user_column] == user_id][item_column].unique()
+        todos_los_items = dataframe[item_column].unique()
+        pares_items = [(user_id, item, 0) for item in set(todos_los_items) - set(items_interactuados)]
+        predicciones = self.model.test(pares_items)
+        recomendaciones = sorted(predicciones, key=lambda x: x.est, reverse=True)[:n_recommendations]
+        return [int(pred.iid) for pred in recomendaciones]
+
+    def save_model(self) -> None:
+        dump(self.model, self.model_path)
+        print(f"[+] Model saved to {self.model_path}.")
+
+    def load_model(self) -> None:
+        self.model = load(self.model_path)
+        print(f"[+] Model loaded from {self.model_path}.")
+
+    def update_and_retrain(self, new_dataframe: DataFrame, rating_scale: Tuple[float, float]) -> str:
+        if not self.data:
+            raise ValueError("Data not loaded. Use 'load_data' to load an initial DataFrame first.")
+        original_dataframe = self.data.df
+        updated_dataframe = concat([original_dataframe, new_dataframe]).drop_duplicates()
+        self.load_data(updated_dataframe, rating_scale=rating_scale)
+        self.train()
+        print("[+] Model updated and retrained with new data.")
+
+#  ████████╗ █████╗ ██████╗  ██████╗ ███████╗████████╗    ███╗   ███╗ ██████╗ ██████╗ ███████╗██╗     
+#  ╚══██╔══╝██╔══██╗██╔══██╗██╔════╝ ██╔════╝╚══██╔══╝    ████╗ ████║██╔═══██╗██╔══██╗██╔════╝██║     
+#     ██║   ███████║██████╔╝██║  ███╗█████╗     ██║       ██╔████╔██║██║   ██║██║  ██║█████╗  ██║     
+#     ██║   ██╔══██║██╔══██╗██║   ██║██╔══╝     ██║       ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ██║     
+#     ██║   ██║  ██║██║  ██║╚██████╔╝███████╗   ██║       ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗███████╗
+#     ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝       ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝
 
 class TargetModel:
     def __init__(self, input_shape, learning_rate=0.001, dropout_rate=0.2, layer_units=[64, 32]):
@@ -31,11 +105,12 @@ class TargetModel:
         predictions = self.model.predict(x_test)
         return predictions
 
-
-
-
-
-
+#  ████████╗██╗    ██╗ ██████╗     ████████╗ ██████╗ ██╗    ██╗███████╗██████╗     ███╗   ███╗ ██████╗ ██████╗ ███████╗██╗         ██╗   ██╗ ██╗
+#  ╚══██╔══╝██║    ██║██╔═══██╗    ╚══██╔══╝██╔═══██╗██║    ██║██╔════╝██╔══██╗    ████╗ ████║██╔═══██╗██╔══██╗██╔════╝██║         ██║   ██║███║
+#     ██║   ██║ █╗ ██║██║   ██║       ██║   ██║   ██║██║ █╗ ██║█████╗  ██████╔╝    ██╔████╔██║██║   ██║██║  ██║█████╗  ██║         ██║   ██║╚██║
+#     ██║   ██║███╗██║██║   ██║       ██║   ██║   ██║██║███╗██║██╔══╝  ██╔══██╗    ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ██║         ╚██╗ ██╔╝ ██║
+#     ██║   ╚███╔███╔╝╚██████╔╝       ██║   ╚██████╔╝╚███╔███╔╝███████╗██║  ██║    ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗███████╗     ╚████╔╝  ██║
+#     ╚═╝    ╚══╝╚══╝  ╚═════╝        ╚═╝    ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝    ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝      ╚═══╝   ╚═╝
 
 class TwoTowerModelv1(nn.Module):
     def __init__(self, user_input_size: int, item_input_size: int, embedding_size: int = 64):
@@ -125,6 +200,71 @@ class TwoTowerModelv1(nn.Module):
 
         return predictions
 
+#  ████████╗██╗    ██╗ ██████╗     ████████╗ ██████╗ ██╗    ██╗███████╗██████╗     ███╗   ███╗ ██████╗ ██████╗ ███████╗██╗         ██╗   ██╗██████╗ 
+#  ╚══██╔══╝██║    ██║██╔═══██╗    ╚══██╔══╝██╔═══██╗██║    ██║██╔════╝██╔══██╗    ████╗ ████║██╔═══██╗██╔══██╗██╔════╝██║         ██║   ██║╚════██╗
+#     ██║   ██║ █╗ ██║██║   ██║       ██║   ██║   ██║██║ █╗ ██║█████╗  ██████╔╝    ██╔████╔██║██║   ██║██║  ██║█████╗  ██║         ██║   ██║ █████╔╝
+#     ██║   ██║███╗██║██║   ██║       ██║   ██║   ██║██║███╗██║██╔══╝  ██╔══██╗    ██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  ██║         ╚██╗ ██╔╝██╔═══╝ 
+#     ██║   ╚███╔███╔╝╚██████╔╝       ██║   ╚██████╔╝╚███╔███╔╝███████╗██║  ██║    ██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗███████╗     ╚████╔╝ ███████╗
+#     ╚═╝    ╚══╝╚══╝  ╚═════╝        ╚═╝    ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝    ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝      ╚═══╝  ╚══════╝
+
+
+class TwoTowerModelv2(nn.Module):
+    def __init__(self, df_users: DataFrame, df_items: DataFrame, embedding_size: int = 64):
+        super(TwoTowerModelv2, self).__init__()
+        
+        self.dataframe_users = df_users
+        self.dataframe_items = df_items
+        self.embedding_size = embedding_size
+        self.user_input_size = len(df_users.columns)
+        self.item_input_size = len(df_items.columns)
+
+        self.user_tower = nn.Sequential(
+            nn.Linear(self.user_input_size, 128),
+            nn.ReLU(),
+            nn.Linear(128, embedding_size)
+        )
+        self.item_tower = nn.Sequential(
+            nn.Linear(self.item_input_size, 128),
+            nn.ReLU(),
+            nn.Linear(128, embedding_size)
+        )
+        
+        self.optimizer = optim.Adam(self.parameters(), lr=0.001)
+        self.criterion = nn.BCELoss()
+
+    def forward(self, user_input, item_input):
+        user_embedding = self.user_tower(user_input)
+        item_embedding = self.item_tower(item_input)
+        score = torch.sum(user_embedding * item_embedding, dim=1)
+        return torch.sigmoid(score)
+
+    def train_model(self, df_users: DataFrame, df_items: DataFrame, epochs: int = 30):
+        user_input = torch.tensor(df_users.values).float()
+        item_input = torch.tensor(df_items.values).float()
+        num_users = len(df_users)
+        num_items = len(df_items)
+        user_input_expanded = user_input.unsqueeze(1).expand(-1, num_items, -1).reshape(-1, user_input.size(1))
+        item_input_expanded = item_input.repeat(num_users, 1)
+
+        for epoch in range(epochs):
+            self.optimizer.zero_grad()
+            output = self(user_input_expanded, item_input_expanded)
+            labels = torch.randint(0, 2, (len(output),)).float()
+            loss = self.criterion(output, labels)
+            loss.backward()
+            self.optimizer.step()
+            print(f"[+] Epoch {epoch+1}/{epochs} => Loss: {loss.item():.4f}")
+
+    def predict(self, df_users: DataFrame, df_items: DataFrame):
+        user_input = torch.tensor(df_users.values).float()
+        item_input = torch.tensor(df_items.values).float()
+        num_users = len(df_users)
+        num_items = len(df_items)
+        user_input_expanded = user_input.unsqueeze(1).expand(-1, num_items, -1).reshape(-1, user_input.size(1))
+        item_input_expanded = item_input.repeat(num_users, 1)
+        with torch.no_grad():
+            predictions = self(user_input_expanded, item_input_expanded)
+        return predictions
 
 
 
@@ -133,6 +273,12 @@ class TwoTowerModelv1(nn.Module):
 
 
 
+#      ██████╗ ███████╗███████╗██████╗        ██╗        ██████╗██████╗  ██████╗ ███████╗███████╗    ███╗   ██╗███████╗████████╗██╗    ██╗ ██████╗ ██████╗ ██╗  ██╗
+#      ██╔══██╗██╔════╝██╔════╝██╔══██╗       ██║       ██╔════╝██╔══██╗██╔═══██╗██╔════╝██╔════╝    ████╗  ██║██╔════╝╚══██╔══╝██║    ██║██╔═══██╗██╔══██╗██║ ██╔╝
+#      ██║  ██║█████╗  █████╗  ██████╔╝    ████████╗    ██║     ██████╔╝██║   ██║███████╗███████╗    ██╔██╗ ██║█████╗     ██║   ██║ █╗ ██║██║   ██║██████╔╝█████╔╝ 
+#      ██║  ██║██╔══╝  ██╔══╝  ██╔═══╝     ██╔═██╔═╝    ██║     ██╔══██╗██║   ██║╚════██║╚════██║    ██║╚██╗██║██╔══╝     ██║   ██║███╗██║██║   ██║██╔══██╗██╔═██╗ 
+#      ██████╔╝███████╗███████╗██║         ██████║      ╚██████╗██║  ██║╚██████╔╝███████║███████║    ██║ ╚████║███████╗   ██║   ╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗
+#      ╚═════╝ ╚══════╝╚══════╝╚═╝         ╚═════╝       ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝    ╚═╝  ╚═══╝╚══════╝   ╚═╝    ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
 
 class RecommenderSystemDCNv2:
     def __init__(self, df_interactions, embedding_size=10, learning_rate=0.01):
@@ -217,13 +363,6 @@ class RecommenderSystemDCNv2:
         self.model.load_state_dict(checkpoint['model_state_dict'])
         self.optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         print(f"Modelo cargado desde {file_path}")
-
-
-
-
-
-
-
 
 
 
