@@ -1,5 +1,9 @@
+# Directorios
 .vscode/
 .notes/
 .sistema-de-recomendacion-unab-env/
 __pycache__/
+build/
+
+# Archivos
 *.pyc

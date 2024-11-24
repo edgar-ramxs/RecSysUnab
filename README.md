@@ -1,23 +1,42 @@
-# Sistema de recomendación de ejercicios
-+ Tesis - Edgar Ramos - Universidad Andres Bello
+# RecSysUnab: Sistema de recomendación de ejercicios para asignatura de programación
++ Autor : Edgar Alejandro Ramos Vivenes
++ Email : e.ramosvivenes@uandresbello.edu
++ Institución : Universidad Andrés Bello, Chile. 
 
 ## Instalación
 
 ### 1. Clonar repositorio
 ```shell
-git clone https://github.com/edgar-ramxs/sistema-de-recomendacion-unab.git ~/RecSysUnab
+git clone https://github.com/edgar-ramxs/RecSysUnab.git ~/RecSysUnab
 cd ~/RecSysUnab
 code .
 ```
 
-### 2. Instalar librerias
-> **NOTA**: Luego de clonar el repositorio, debe instalar un [entorno virtual de Python](https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/).
+### 2. Instalar entorno virtual en Python (opcional)
 
-+ Gestor de paquetes de Python
++ Instalar entorno virtual
+```shell
+pip install virtualenv
+```
+
++ Crear entorno virtual 
+```shell
+python -m venv .RecSysUnabVenv
+```
+
++ Activar entorno virtual (Linux)
+```shell
+source .RecSysUnabVenv/bin/activate
+```
+
+### 3. Instalar paquetes 
+
+
++ Por medio del gestor de paquetes de Python (pip)
 ```shell
 pip install numpy pandas matplotlib seaborn scikit-learn scikit-surprise tensorflow tensorflow-recommenders torch torchvision torchaudio
 ```
-+ Instalación de paquetes especificos
++ Por medio de instalación de paquetes especificos
 ```bash
 pip install -r requirements.txt
 ```

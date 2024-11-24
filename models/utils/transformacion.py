@@ -1,6 +1,8 @@
-from typing import Dict, List, Optional, Text, Tuple
+import re
 
+from typing import Dict, List, Optional, Text, Tuple
 from pandas import DataFrame, Series, concat
+from ast import literal_eval
 
 from surprise import accuracy
 from surprise import SVD, SVDpp, SlopeOne, NMF, NormalPredictor, KNNBaseline
@@ -26,7 +28,7 @@ def crear_lista_ejercicios(n_ejercicios: int, ejercicios_realizados: List[int]) 
     return lista_ejercicios
 
 
-def crear_matriz_factorizacion(df_usuarios: DataFrame, df_items: DataFrame, columna_usuario: str) -> DataFrame:
+def crear_matriz_factorizacion(df_usuarios: DataFrame, df_items: DataFrame, columna_usuario: str = 'id_estudiante') -> DataFrame:
     """Genera una matriz de factorización de usuarios por ejercicios en formato binario.
 
     Parámetros:
@@ -44,13 +46,29 @@ def crear_matriz_factorizacion(df_usuarios: DataFrame, df_items: DataFrame, colu
         ejercicios = []
         
         if not fila['ejercicios_hito1'] == -1:
-            ejercicios += fila['ejercicios_hito1']
+            if isinstance(fila['ejercicios_hito1'], list):
+                ejercicios += fila['ejercicios_hito1']
+            else:
+                ejercicios += literal_eval(fila['ejercicios_hito1'])
+            
         if not fila['ejercicios_hito2'] == -1:
-            ejercicios += fila['ejercicios_hito2']
+            if isinstance(fila['ejercicios_hito2'], list):
+                ejercicios += fila['ejercicios_hito2']
+            else:
+                ejercicios += literal_eval(fila['ejercicios_hito2'])
+
         if not fila['ejercicios_hito3'] == -1:
-            ejercicios += fila['ejercicios_hito3']
+            if isinstance(fila['ejercicios_hito3'], list):
+                ejercicios += fila['ejercicios_hito3']
+            else:
+                ejercicios += literal_eval(fila['ejercicios_hito3'])
+
         if not fila['ejercicios_hito4'] == -1:
-            ejercicios += fila['ejercicios_hito4']
+            if isinstance(fila['ejercicios_hito4'], list):
+                ejercicios += fila['ejercicios_hito4']
+            else:
+                ejercicios += literal_eval(fila['ejercicios_hito4'])
+
 
         vector_ejercicios = crear_lista_ejercicios(n_items, ejercicios)
         matriz_factorizacion.loc[len(matriz_factorizacion)] = vector_ejercicios
@@ -170,10 +188,10 @@ def evaluar_algoritmos(datos, algoritmos=None) -> DataFrame:
         tmp = DataFrame.from_dict(resultados).mean(axis=0)
         nombre_algoritmo = Series([str(algoritmo).split(' ')[0].split('.')[-1]], index=['Algoritmo'])
         tmp = concat([tmp, nombre_algoritmo])
-        tmp['Puntaje de Referencia'] = 1 / tmp['test_rmse'] if tmp['test_rmse'] != 0 else float('inf')
         referencia.append(tmp)
     
-    return DataFrame(referencia).set_index('Algoritmo').sort_values('test_rmse')
+    return DataFrame(referencia).set_index('Algoritmo').sort_values(by=['test_rmse', 'test_mae'], ascending=[True, True])
+
 
 
 def crear_y_evaluar_modelo_surprise(conjunto_entrenamiento, conjunto_prueba, algoritmo):
@@ -198,17 +216,60 @@ def crear_y_evaluar_modelo_surprise(conjunto_entrenamiento, conjunto_prueba, alg
     return modelo
 
 
+def crear_train_test_con_queries(dataset: DataFrame, matrix: DataFrame, prueba: DataFrame, queries: list[str] = None, id_column: str = 'id_estudiante'):
+    """
+    Divide dataset en train y test basado en condiciones definidas por queries, y sincroniza otros DataFrames relacionados.
+
+    Parameters:
+        dataset (DataFrame): DataFrame principal que contiene los datos completos a dividir.
+        matrix (DataFrame): DataFrame relacionado con el dataset, con una columna común de identificación.
+        prueba (DataFrame): Otro DataFrame relacionado que será sincronizado con los conjuntos train y test.
+        queries (list[str], opcional): Lista de expresiones lógicas para filtrar el dataset y eliminar filas del conjunto train. Si no se proporciona, se utilizan queries por defecto.
+        id_column (str): Nombre de la columna que actúa como identificador único en todos los DataFrames.
+
+    Returns:
+        tuple: (train_dataset, test_dataset, train_matrix, test_matrix, train_prueba, test_prueba)
+    """
+
+    train_dataset = dataset.copy()
+    train_dataset['promedio_solemnes'] = (train_dataset['solemne_1'] + train_dataset['solemne_2'] + train_dataset['solemne_3'] + train_dataset['solemne_4']) / 4
+
+    if queries is None:
+        queries = [
+            " `ejercicios_hito1` == -1 and `ejercicios_hito2` == -1 and `ejercicios_hito3` == -1 and `ejercicios_hito4` == -1 ", 
+            " `solemne_1` < 4.0 and `solemne_2` < 4.0 and `solemne_3` < 4.0 and `solemne_4` < 4.0 ",
+            " `promedio_solemnes` < 4.0 "
+        ]
+    
+    for query in queries: 
+        remove = train_dataset.query(query)
+        train_dataset = train_dataset[~train_dataset[id_column].isin(remove[id_column])]
+    
+    train_dataset = train_dataset.drop(columns=['promedio_solemnes'])
+    test_dataset = dataset[~dataset[id_column].isin(train_dataset[id_column])]
+
+    train_matrix = matrix[matrix[id_column].isin(train_dataset[id_column])]
+    test_matrix = matrix[matrix[id_column].isin(test_dataset[id_column])]
+
+    train_prueba = prueba[prueba[id_column].isin(train_dataset[id_column])]
+    test_prueba = prueba[prueba[id_column].isin(test_dataset[id_column])]
+
+    return train_dataset, test_dataset, train_matrix, test_matrix, train_prueba, test_prueba
+
+
+def formatear_texto(texto):
+    if isinstance(texto, str):
+        texto = texto.strip().lower()  # Eliminar espacios y convertir a minúsculas
+        texto = re.sub(r'[^\w\s]', '', texto)  # Eliminar caracteres especiales
+        texto = ' '.join(texto.split())  # Eliminar múltiplos espacios
+    return texto
 
 
 
-
-
-
-
-
-
-
-
+def calcular_puntaje_personalizado_prueba(row, cols: list[str]) -> int:
+    grupo = row[cols]
+    puntaje = 15 * (sum(grupo)/len(cols))
+    return int(puntaje)
 
 
 
