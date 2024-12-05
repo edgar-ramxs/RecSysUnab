@@ -1,0 +1,185 @@
+
+
+// REVISIONES
+
+Los sistemas de recomendación (SR) son herramientas esenciales diseñadas para filtrar información masiva y proporcionar contenido relevante y personalizado a los usuarios. Su principal propósito es abordar la sobrecarga de información que dificulta la identificación de recursos adecuados, facilitando la toma de decisiones en dominios como el comercio electrónico, el entretenimiento y, especialmente, la educación \cite{10.1007/978-3-319-73450-7_89} \cite{10.1145/3285029} \cite{DBLP:journals/corr/abs-2101-06286}.
+
+En el ámbito educativo, los SR buscan mejorar la experiencia de aprendizaje al ofrecer recomendaciones adaptadas a las necesidades específicas de los estudiantes. Esto incluye cursos, materiales y actividades que se alineen con sus estilos de aprendizaje y objetivos académicos \cite{10.1007/978-3-319-73450-7_89} \cite{GEORGE2019103642} \cite{daSilva2023}. Además, los docentes pueden beneficiarse al utilizar estas herramientas para planificar estrategias pedagógicas más efectivas, ajustadas a las necesidades de sus alumnos \cite{daSilva2023} \cite{electronics10141611}. Sin embargo, persiste una brecha en la investigación, ya que muchas evaluaciones de SR se centran en métricas como la precisión, ignorando su impacto pedagógico \cite{daSilva2023} \cite{Khanal2020} .
+
+
+Los métodos utilizados en SR incluyen técnicas tradicionales como el filtrado colaborativo, el filtrado basado en contenido y modelos híbridos, estos últimos son los más destacados en contextos educativos recientes debido a su capacidad para combinar fortalezas de múltiples enfoques \cite{9028466} \cite{daSilva2023}. Con la incorporación de aprendizaje profundo, los SR han avanzado significativamente, permitiendo captar relaciones complejas entre usuarios y recursos educativos, lo que mejora la calidad y personalización de las recomendaciones \cite{10.1145/3285029}  \cite{DBLP:journals/corr/abs-2101-06286}. Además, los enfoques basados en aprendizaje por refuerzo, aunque prometedores, enfrentan retos como la escalabilidad y los altos costos computacionales \cite{DBLP:journals/corr/abs-2101-06286}.
+
+En términos de impacto, los SR optimizan la eficiencia del aprendizaje al reducir el tiempo y esfuerzo necesarios para encontrar recursos relevantes, personalizando las recomendaciones según las habilidades, intereses y objetivos de los estudiantes. Esto no solo mejora el rendimiento académico, sino que también fomenta la motivación al proporcionar contenido alineado con las preferencias individuales \cite{GEORGE2019103642} \cite{daSilva2023} \cite{Khanal2020} .
+
+A pesar de estos beneficios, los SR enfrentan problemas tecnológicos como el inicio en frío, la escasez de datos y la escalabilidad. Además, en el ámbito educativo, es crucial incorporar factores éticos como la equidad y la diversidad para evitar sesgos y garantizar que las recomendaciones sean inclusivas y alineadas con los principios pedagógicos \cite{DBLP:journals/corr/abs-2101-06286} \cite{daSilva2023} \cite{zhao2024fairnessdiversityrecommendersystems}. Las tendencias actuales apuntan hacia sistemas más adaptativos, con un enfoque en la inteligencia artificial para superar limitaciones tradicionales y evaluar su impacto en el aprendizaje de manera más holística \cite{10.1007/978-3-319-73450-7_89} \cite{daSilva2023} \cite{zhao2024fairnessdiversityrecommendersystems}.
+
+
+
+\cite{10.1007/978-3-319-73450-7_89}                [13]: [REVIEW] 2018 - Recommendation Systems in Education A Systematic Mapping Study*     
+\cite{10.1145/3285029}                             [14]: [REVIEW] 2019 - Deep Learning Based Recommender System A Survey and New Perspectives*  
+\cite{9028466}                                     [15]: [REVIEW] 2019 - Developments in Educational Recommendation Systems a systematic review*  
+\cite{GEORGE2019103642}                            [16]: [REVIEW] 2019 - Review of ontology-based recommender systems in e-learning*  
+\cite{Khanal2020}                                  [17]: [REVIEW] 2020 - A systematic review machine learning based recommendation systems for e-learning*  
+\cite{electronics10141611}                         [18]: [REVIEW] 2021 - Recommendation Systems for Education Systematic Review*  
+\cite{DBLP:journals/corr/abs-2101-06286}           [19]: [REVIEW] 2021 - Reinforcement Learning based Recommender Systems A Survey*  
+\cite{daSilva2023}                                 [20]: [REVIEW] 2023 - A systematic literature review on educational recommender systems for teaching and learning research trends
+\cite{zhao2024fairnessdiversityrecommendersystems} [21]: [REVIEW] 2024 - Fairness and Diversity in Recommender Systems A Survey* 
+
+
+
+
+// TRABAJOS RELACIONADOS
+
+Los sistemas de recomendación basados en la arquitectura de dos torres (two-tower) son ampliamente reconocidos por su eficacia en entornos de gran escala debido a su capacidad para separar eficientemente la representación de usuarios y elementos recomendados en espacios vectoriales. Esta separación permite precomputar las representaciones de los elementos, optimizando así el tiempo de inferencia mediante algoritmos de búsqueda de vecinos más cercanos (ANN, por sus siglas en inglés), lo que es esencial para escenarios donde los tiempos de respuesta son crítico \cite{10.1145/2959100.2959190} \cite{10.1145/3366424.3386195} \cite{10.1145/3539618.3591643} \cite{zhang2023divideconquerbetterembeddingbased}.
+
+En el contexto educativo, los sistemas de recomendación de dos torres pueden aportar ventajas significativas al facilitar la personalización de contenido para estudiantes. Por ejemplo, estos modelos pueden integrar características de cursos y comportamientos de los usuarios para ofrecer recomendaciones adaptadas a sus necesidades específicas, superando problemas comunes como la sobrecarga de información y la escasez de datos \cite{app11198993} \cite{10.1145/3551349.3559496}.
+
+Además, al abordar problemas como el "inicio en frío", donde hay poca interacción inicial entre usuarios y elementos, los sistemas de dos torres utilizan características adicionales, como descripciones de cursos, intereses profesionales o datos demográficos, para mejorar la precisión de las recomendaciones incluso con datos limitados \cite{10.1145/3366424.3386195} \cite{10.1145/3404835.3463032}.
+
+Desde una perspectiva técnica, las iteraciones más recientes de los modelos de dos torres han mejorado su capacidad para capturar interacciones complejas entre usuarios y elementos recomendados. Modelos como IntTower han introducido mecanismos avanzados para potenciar las señales de interacción entre las dos torres, logrando un equilibrio entre la eficiencia computacional y la precisión de las recomendaciones \cite{10.1145/3511808.3557072} \cite{10.1145/3539618.3591643}.
+
+En términos de impacto en la educación, estas capacidades permiten a los sistemas adaptarse dinámicamente a los estilos de aprendizaje individuales, mejorando la retención y motivación de los estudiantes. Además, al reducir la carga cognitiva asociada con la selección de recursos, los estudiantes pueden enfocarse en objetivos de aprendizaje más claros y efectivos \cite{app11198993} \cite{10.1145/3539618.3591643}.
+
+En resumen, los sistemas de recomendación de dos torres representan una solución poderosa y escalable para personalizar el aprendizaje en plataformas educativas, ofreciendo ventajas significativas en términos de eficiencia, adaptabilidad y precisión, al tiempo que abordan desafíos fundamentales como la interacción usuario-curso y la integración de datos heterogéneos.
+
+
+\cite{10.1145/2959100.2959190}                          [59]: 2016 - Deep Neural Networks for YouTube Recommendations  
+\cite{10.1145/3366424.3386195}                          [60]: 2020 - Mixed Negative Sampling for Learning Two-tower Neural Networks in Recommendations  
+\cite{10.1145/3366423.3380130}                          [61]: 2020 - Off-policy Learning in Two-stage Recommender Systems  
+\cite{app11198993}                                      [62]: 2021 - A Deep Learning-Based Course Recommender System for Sustainable Development in Education  
+\cite{10.1145/3404835.3463032}                          [63]: 2021 - Cross-Batch Negative Sampling for Training Two-Tower Recommenders  
+\cite{10.1145/3511808.3557072}                          [64]: 2022 - IntTower: The Next Generation of Two-Tower Model for Pre-Ranking System  
+\cite{10.1145/3551349.3559496}                          [65]: 2022 - MV-HAN: A Hybrid Attentive Networks based Multi-View Learning Model for Large-scale Contents Recommendation  
+\cite{10.1145/3539618.3591643}                          [66]: 2023 - Beyond Two-Tower Matching: Learning Sparse Retrievable Cross-Interactions for Recommendation  
+\cite{zhang2023divideconquerbetterembeddingbased}       [67]: 2023 - Divide and Conquer: Towards Better Embedding-based Retrieval for Recommender Systems from a Multi-task Perspective  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// PROMPT ARTICULOS
+
+Respondeme estas preguntas segun lo que analisaste del paper que te pase:
+
+¿De qué trata este paper?
+
+¿Qué problemas o problemáticas busca abordar?
+
+¿Cuál es el enfoque o metodología que utilizaron para tratar el problema?
+
+¿Cómo implementaron su metodología o enfoque?
+
+¿Qué tipo de sistema o arquitectura utilizaron?
+
+¿Usaron algún tipo de código o modelo codificado para implementar sus soluciones?
+
+¿Qué resultados obtuvieron al implementar sus soluciones?
+
+¿Cuáles son las conclusiones principales que los autores plantean?
+
+¿Qué trabajos futuros se mencionan en este paper?
+
+¿Tiene alguna relación con los sistemas de recomendación de dos torres o se hacen menciones al respecto?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3. Cómo aprenden
+Los sistemas de dos torres se entrenan utilizando técnicas de aprendizaje supervisado. En general, el aprendizaje consiste en ajustar los pesos de las redes neuronales de cada torre para maximizar la relevancia de las recomendaciones.
+
+Conjunto de datos:
+
+Se utiliza un conjunto de datos etiquetado que incluye pares usuario-elemento, junto con una etiqueta que indica si la interacción fue positiva o negativa.
+Para manejar el desequilibrio entre interacciones positivas y negativas, se emplean técnicas como el negative sampling, donde se seleccionan muestras negativas para complementar el entrenamiento.
+Función de pérdida:
+
+La función de pérdida típica es el binary cross-entropy o variantes diseñadas para maximizar la probabilidad de que los elementos relevantes sean recomendados al usuario correcto.
+También pueden incluirse términos de regularización para evitar el sobreajuste.
+Optimización:
+Se emplean algoritmos como Adam o SGD para optimizar los parámetros de las redes neuronales y minimizar la función de pérdida.
+
+4. Componentes fundamentales de la arquitectura
+Embeddings:
+Los embeddings son representaciones vectoriales densas que encapsulan información relevante sobre los usuarios y elementos. Se aprenden durante el entrenamiento y son fundamentales para calcular similitudes efectivas.
+
+Redes neuronales profundas (DNN):
+Las redes neuronales en cada torre procesan las características de entrada y transforman los datos en embeddings significativos. Las DNN suelen incluir capas densas totalmente conectadas, activaciones no lineales y normalización para mejorar la capacidad de generalización.
+
+Negative Sampling:
+Para manejar datos no balanceados, se incluyen ejemplos negativos generados a partir de elementos que no han sido seleccionados por el usuario. Esto mejora la robustez del modelo al entrenarlo en situaciones reales de recomendación.
+
+Mecanismos de interacción:
+La interacción entre las representaciones de usuarios y elementos es crucial. Esto puede ser un simple producto punto o interacciones más complejas introducidas en arquitecturas como IntTower【64】.
+
