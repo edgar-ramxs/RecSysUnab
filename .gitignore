@@ -7,3 +7,5 @@ build/
 
 # Archivos
 *.pyc
+
+.sistema-de-recomendacion-unab-env
